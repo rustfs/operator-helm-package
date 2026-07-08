@@ -5,23 +5,33 @@ const GITHUB_RAW_URL =
 const PAGE_TITLE = "RustFS Operator Helm Chart";
 const CACHE_TTL = 300;
 
-// 省略 HTML_TEMPLATE ...
+const HTML_TEMPLATE = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>__PAGE_TITLE__</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
+</head>
+<body>
+  <main class="markdown-body" style="max-width:980px;margin:40px auto;padding:24px;">
+    __CONTENT__
+  </main>
+</body>
+</html>`;
 
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
-    // Health check
     if (url.pathname === "/health") {
       return new Response("ok", { status: 200 });
     }
 
-    // Only render README for homepage.
     if (url.pathname !== "/" && url.pathname !== "/index.html") {
       return env.ASSETS.fetch(request);
     }
 
-    // Check Cloudflare Cache
     const cache = caches.default;
     const cacheKey = new Request(url.toString(), request);
     let response = await cache.match(cacheKey);
@@ -30,7 +40,6 @@ export default {
       return response;
     }
 
-    // Fetch README from GitHub
     let htmlContent;
     try {
       const resp = await fetch(GITHUB_RAW_URL, {
