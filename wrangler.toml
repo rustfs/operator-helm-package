@@ -1,0 +1,12 @@
+name = "operator-helm-pages"
+main = "dist/worker.js"
+compatibility_date = "2024-01-01"
+
+# Build handled by GitHub Actions before wrangler deploy
+# build.command = "npm ci && npm run build"
+
+# Route: configure domain binding in Cloudflare Dashboard
+# or uncomment below:
+# routes = [
+#   { pattern = "operator.rustfs.com/*", zone_name = "rustfs.com" }
+# ]

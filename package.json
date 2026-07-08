@@ -1,0 +1,12 @@
+{
+  "name": "operator-helm-pages",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "esbuild worker/worker.js --bundle --outfile=dist/worker.js --format=esm --target=es2022 --minify --conditions=worker"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "marked": "^15.0.0"
+  }
+}
