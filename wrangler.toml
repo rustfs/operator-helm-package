@@ -1,4 +1,4 @@
-name = "operator-helm-pages"
+name = "operator-rustfs-com"
 main = "worker/worker.js"
 compatibility_date = "2026-07-08"
 
