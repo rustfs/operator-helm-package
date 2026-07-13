@@ -9,16 +9,22 @@ Helm chart for deploying the RustFS Kubernetes operator.
 
 ## Installing the Chart
 
+Add the RustFS operator Helm repository:
+
+```bash
+helm repo add operator https://operator.rustfs.com
+```
+
 To install the chart with the release name `rustfs-operator`:
 
 ```bash
-helm install rustfs-operator deploy/rustfs-operator/
+helm install rustfs-operator operator/rustfs-operator
 ```
 
 To install in a specific namespace:
 
 ```bash
-helm install rustfs-operator deploy/rustfs-operator/ --namespace rustfs-system --create-namespace
+helm install rustfs-operator operator/rustfs-operator --namespace rustfs-system --create-namespace
 ```
 
 ## Uninstalling the Chart
@@ -135,7 +141,7 @@ Policy ConfigMaps and user Secrets must live in the Tenant namespace. If they ar
 ### Custom Image and Tag
 
 ```bash
-helm install rustfs-operator deploy/rustfs-operator/ \
+helm install rustfs-operator operator/rustfs-operator \
   --set operator.image.repository=myregistry/operator \
   --set operator.image.tag=v0.2.0
 ```
@@ -143,7 +149,7 @@ helm install rustfs-operator deploy/rustfs-operator/ \
 ### Increased Resources
 
 ```bash
-helm install rustfs-operator deploy/rustfs-operator/ \
+helm install rustfs-operator operator/rustfs-operator \
   --set operator.resources.requests.cpu=200m \
   --set operator.resources.requests.memory=256Mi \
   --set operator.resources.limits.cpu=1000m \
@@ -156,14 +162,14 @@ With the chart default behavior, `leaderElect` is automatically enabled when
 `operator.replicas > 1` and disabled when `operator.replicas <= 1`:
 
 ```bash
-helm install rustfs-operator deploy/rustfs-operator/ \
+helm install rustfs-operator operator/rustfs-operator \
   --set operator.replicas=3
 ```
 
 Override explicitly if needed (for example, to force single-leader mode in all cases):
 
 ```bash
-helm install rustfs-operator deploy/rustfs-operator/ \
+helm install rustfs-operator operator/rustfs-operator \
   --set operator.replicas=3 \
   --set operator.leaderElect=false
 ```
@@ -194,7 +200,7 @@ operator:
 Install with your custom values:
 
 ```bash
-helm install rustfs-operator deploy/rustfs-operator/ -f custom-values.yaml
+helm install rustfs-operator operator/rustfs-operator -f custom-values.yaml
 ```
 
 ### STS PolicyBinding and Workload Token
@@ -285,7 +291,7 @@ kubectl apply -f examples/simple-tenant.yaml
 To upgrade the operator:
 
 ```bash
-helm upgrade rustfs-operator deploy/rustfs-operator/
+helm upgrade rustfs-operator operator/rustfs-operator
 ```
 
 ## Console UI
